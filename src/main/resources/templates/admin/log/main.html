@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin}">
+
+<div layout:fragment="content">
+<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between">
+		<h1 class="h3 mb-2 text-gray-800" >Danh sách chi tiêu</h1>
+	</div>
+	<div class="card shadow mb-4">
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+		        	<thead>
+		            	<tr>
+		                	<th>STT</th>
+			     			<th>Người dùng</th>
+				     		<th>Thời điểm đăng nhập</th>
+				     		<th>Xóa</th>
+		            	</tr>
+		            </thead>
+		            <tbody>
+		                <tr th:each="log, iter: ${logsList}">
+			                <td th:text="${iter.count}"></td>
+						    <td th:text="${log.user.username}"></td>
+						    <td th:text="${log.loggedAt}"></td>
+				     		<td class="action-area">
+								<a class="btn btn-primary deletebtn" th:data-id="${log.id}" 
+								th:data-type="log"><i class="fas fa-fw fa-trash"></i></a>
+							</td>
+						</tr>
+		            </tbody>
+				</table>
+	        </div>
+   		</div>
+	</div>
+</div>

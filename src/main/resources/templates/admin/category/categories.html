@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin}">
+
+<div layout:fragment="content">
+	<h1 class="h3 mb-2 text-gray-800" >Danh sách các loại chi</h1>
+	<div class="col-12 row justify-content-between">
+		<div class="card col-12 col-md-4 shadow mb-4 p-0" style="height: fit-content;">
+			<div class="card-header">
+		        <h6 class="m-0 font-weight-bold text-primary">Thêm mới</h6>
+		    </div>
+			<div class="card-body">
+				<form th:action="@{/admin/save-category}" th:object="${category}" method="POST" enctype="multipart/form-data">
+		 		
+			 		<label>Tên loại</label>
+			 		<input type="text" th:field = "*{name}" required
+			 		placeholder="Nhập tên loại chi" class="form-control col-12 mb-4">
+		 			
+			 		<label>Ảnh <sup>*</sup></label>
+			 		<input type="file" th:name="file" th:value = "*{icon}"
+			 		class="form-control mb-4 col-12" >
+			 		<button type="submit" class="btn btn-info">Thêm mới</button>
+			 	</form>
+	   		</div>
+		</div>
+		<div class="card col-12 col-md-7 shadow mb-4">
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+			        	<thead>
+			            	<tr>
+			            		<th>STT</th>
+				     			<th>Loại</th>
+			     				<th>Tác vụ</th>
+			            	</tr>
+			            </thead>
+			            <tbody>
+			                <tr th:each="category, iter: ${categoriesList}">
+			                	<td th:text="${iter.count}"></td>
+							    <td th:text="${category.name}"></td>
+					     		<td class="action-area">
+								    <a th:href="@{/admin/update-category/{csid}(csid=${category.csid})}" 
+								    class="btn btn-primary"><i class="fas fa-fw fa-edit"></i></a>
+									<a class="btn btn-primary deletebtn" th:data-id="${category.csid}" 
+									th:data-type="category"><i class="fas fa-fw fa-trash"></i></a>
+								</td>
+							</tr>
+			            </tbody>
+					</table>
+		        </div>
+	   		</div>
+		</div>
+	</div>
+</div>
+

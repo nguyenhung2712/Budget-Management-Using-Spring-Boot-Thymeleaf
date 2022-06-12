@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/user}">
+<div layout:fragment="content">
+	<h1 class="h3 mb-2 text-gray-800">Cập nhật thông tin</h1>
+	<div class="row justify-content-center">
+		<div class="col-md-6 col-12">
+			<div class="card shadow mb-4">
+				<div class="card-header">
+			        <h6 class="m-0 font-weight-bold text-primary">Cập nhật thông tin</h6>
+			    </div>
+				<div class="card-body d-flex justify-content-center my-2">
+						<form th:action="@{/user/update-profile}" th:object="${profileDTO}" method="POST" class="col-10" enctype="multipart/form-data">
+		 		
+					 		<input type="hidden" th:name="img" th:id ="img" th:value="${profileDTO.image}"/>
+					 		
+					 		<label>Họ tên <sup>*</sup></label>
+					 		<input type="text" th:field = "*{name}" required
+					 		placeholder="Nhập họ tên người dùng" class="form-control col-12" th:errorClass="is-invalid">
+					 		<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger font-italic d-block error-label"></label>
+					 		<div class="mb-4"></div>
+					 		
+					 		<label>Email <sup>*</sup></label>
+					 		<input type="text" th:field = "*{email}" required
+					 		placeholder="Nhập email người dùng" class="form-control col-12" th:errorClass="is-invalid">
+					 		<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger font-italic d-block error-label"></label>
+					 		<div class="mb-4"></div>
+					 		
+					 		<label>Số điện thoại <sup>*</sup></label>
+					 		<input type="text" th:field = "*{phone}" required
+					 		placeholder="Nhập số điện thoại" class="form-control col-12" th:errorClass="is-invalid">
+					 		<label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger font-italic d-block error-label"></label>
+					 		<div class="mb-4"></div>
+					 		
+					 		<label for="image">Ảnh <sup>*</sup></label>
+					 		<input type="file" th:name="file" th:value = "*{image}" id="image"
+					 		class="form-control mb-4 col-12" >
+							
+					 		<button type="submit" class="btn btn-info col-12">Cập nhật</button>
+					 	</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-action">
+		<a th:href="@{/user/profile}">Quay lại</a>
+	</div>
+</div>
+
+</html>

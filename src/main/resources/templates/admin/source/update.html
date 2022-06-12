@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      	layout:decorate="~{layouts/admin}">
+<div layout:fragment="content">
+	<h1 class="h3 mb-2 text-gray-800">Cập nhật nguồn thu nhập</h1>
+	<div class="card shadow mb-4 col-md-6 col-12">
+		<div class="card-body">
+			<form th:action="@{/admin/save-source}" th:object="${source}" method="POST" enctype="multipart/form-data">
+				<input type="hidden" th:field="*{csid}" />
+				<input type="hidden" th:name="img" th:id ="img" th:value="${source.icon}"/>
+				
+			 	<label>Tên nguồn</label>
+			 	<input type="text" th:field = "*{name}" required
+			 	placeholder="Nhập tên nguồn thu" class="form-control col-12 mb-4">
+		 		
+			 	<label>Ảnh <sup>*</sup></label>
+		 		<input type="file" th:name="file" th:value = "*{icon}"
+		 		class="form-control mb-4 col-12" >
+			 	<button type="submit" class="btn btn-info">Cập nhật</button>
+			 </form>
+   		</div>
+	</div>
+	<div class="form-action">
+		<a th:href="@{/admin/sources}">Quay lại</a>
+	</div>
+</div>
+</html>

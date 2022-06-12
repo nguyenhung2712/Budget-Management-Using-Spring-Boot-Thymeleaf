@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/user}">
+
+<div layout:fragment="content">
+	
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    	<h1 class="h3 mb-0 text-gray-800">Thống kê ([[${month + '/' + year}]])</h1>
+    	<div class="d-sm-flex align-items-center p-sm-0 pt-3">
+    		<a th:href="@{/user/chart/{month}/{year}/{type}(month=${month}, year=${year}, type='pre')}" 
+    			class="d-inline-block btn btn-sm btn-primary shadow-sm btn-icon-split mx-2">
+	            <span class="icon text-white-50">
+	            	<i class="fas fa-angle-left"></i>
+	            </span>
+	        	<span class="text">Tháng trước</span>
+	        </a>
+	        <a th:href="@{/user/chart}" class="d-inline-block btn btn-sm btn-primary shadow-sm mx-2">
+	        	<i class="fas fa-ankh"></i>
+	        </a>
+	        <a th:href="@{/user/chart/{month}/{year}/{type}(month=${month}, year=${year}, type='next')}" 
+	        	class="d-inline-block btn btn-sm btn-primary shadow-sm btn-icon-split ml-2"
+	        	th:if="${#dates.format(#dates.createNow(), 'MM-yyyy')} != ${month < 10 ? '0' + month : month} + '-' + ${year}">
+	        	<span class="text">Tháng sau</span>
+	        	<span class="icon text-white-50">
+	            	<i class="fas fa-angle-right"></i>
+	            </span>
+	        </a>
+    	</div>
+    </div>
+	<div class="row">
+	<div class="col-md-4 mb-4">
+	    <div class="card border-left-success shadow h-100 py-2">
+	        <div class="card-body">
+	            <div class="row no-gutters align-items-center">
+	                <div class="col mr-2">
+	                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+	                        Tổng thu</div>
+	                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+	                    	+ [[${#numbers.formatDecimal(incomeTotal, 0, 'POINT', 0, 'POINT')}]] ₫
+	                    </div>
+	                </div>
+	                <div class="col-auto">
+	                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="col-md-4 mb-4">
+	    <div class="card border-left-primary shadow h-100 py-2">
+	        <div class="card-body">
+	            <div class="row no-gutters align-items-center">
+	                <div class="col mr-2">
+	                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+	                        Tổng thu được</div>
+	                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+	                    	[[${#numbers.formatDecimal(incomeTotal - expenseTotal, 0, 'POINT', 0, 'POINT')}]] ₫
+	                    </div>
+	                </div>
+	                <div class="col-auto">
+	                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="col-md-4 mb-4">
+	    <div class="card border-left-danger shadow h-100 py-2">
+	        <div class="card-body">
+	            <div class="row no-gutters align-items-center">
+	                <div class="col mr-2">
+	                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+	                        Tổng chi</div>
+	                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+	                    	- [[${#numbers.formatDecimal(expenseTotal, 0, 'POINT', 0, 'POINT')}]] ₫
+	                    </div>
+	                </div>
+	                <div class="col-auto">
+	                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+        	<div class="card shadow mb-4">
+            	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                	<h6 class="m-0 font-weight-bold text-primary">Chi tiết thu chi</h6>
+                	<a th:href="@{/user/area-detail/{month}/{year}(month=${month}, year=${year})}" class="text-decoration-none">
+                    	Xem chi tiết
+                    </a>
+            	</div>
+                <div class="card-body">
+                	<div class="chart-area" style="height: 278px;" th:if="${haveInfo==true}">
+                		<canvas id="myAreaChart"></canvas>	
+                	</div>
+                	<div class="chart-area d-flex justify-content-center align-items-center" th:if="${haveInfo==false}">
+                		<h3 class="h3 mb-0 text-gray-800">Không có thông tin</h3>
+                	</div>
+                </div>
+        	</div>
+        </div>
+		<div class="col-12 col-md-6">
+        	<div class="card shadow mb-4">
+            	<div class="card-header py-3 d-flex flex-row 
+                    align-items-center justify-content-between">
+                	<h6 class="m-0 font-weight-bold text-primary">Thu nhập</h6>
+                	<a th:href="@{/user/doughnut-detail/{month}/{year}/{type}(month=${month}, year=${year}, type='income')}" class="text-decoration-none">
+                    	Xem chi tiết
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2" style="height: 278px;" th:if="${haveDIncome}">
+                		<canvas id="myPieChart1"></canvas>	
+                	</div>
+                	<div class="chart-pie pt-4 pb-2 d-flex justify-content-center align-items-center" th:unless="${haveDIncome}">
+                		<h3 class="h3 mb-0 text-gray-800">Không có thông tin</h3>
+                	</div>
+            	</div>
+        	</div>
+    	</div>
+    	<div class="col-12 col-md-6">
+        	<div class="card shadow mb-4">
+            	<div class="card-header py-3 d-flex flex-row 
+                    align-items-center justify-content-between">
+                	<h6 class="m-0 font-weight-bold text-primary">Chi tiêu</h6>
+                	<a th:href="@{/user/doughnut-detail/{month}/{year}/{type}(month=${month}, year=${year}, type='expense')}" class="text-decoration-none">
+                    	Xem chi tiết
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2" style="height: 278px;" th:if="${haveDExpense}">
+                		<canvas id="myPieChart2"></canvas>	
+                	</div>
+                	<div class="chart-pie pt-4 pb-2 d-flex justify-content-center align-items-center" th:unless="${haveDExpense}">
+                		<h3 class="h3 mb-0 text-gray-800">Không có thông tin</h3>
+                	</div>
+            	</div>
+        	</div>
+    	</div>
+	</div>
+</div>
+
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link rel="shortcut icon" type="image/x-icon" th:href="@{/img/cs_icon/salary.png}" />
+    <title>User</title>
+
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/css/custom.css}" rel="stylesheet">
+    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+<body>
+	<div id="wrapper">
+		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/user}">
+                <div class="sidebar-brand-icon rotate-n-15">
+                	<i class="fas fa-wallet"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">User</div>
+            </a>
+
+            <hr class="sidebar-divider my-0" />
+
+            <div class="sidebar-heading mt-3">Quản lý</div>
+            
+            <li class="nav-item">
+                <a class="nav-link collapsed" th:href="@{/user}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Thống kê</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link collapsed" th:href="@{/user/statistic-list}">
+                    <i class="fas fa-fw fa-user-tie"></i>
+                    <span>Chi tiết</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" th:href="@{/user/incomes}">
+			        <i class="fas fa-hand-holding-usd"></i>
+                    <span>Thu nhập</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a class="nav-link collapsed" th:href="@{/user/expenses}">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <span>Chi tiêu</span>	
+                </a>
+            </li>
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+		<div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                
+					<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <div th:if="${alertType!=null}" th:class="${alertType=='success'?
+                            'form-control alert alert-success small': 'form-control alert alert-danger small'}" 
+                            id="AlertBox" th:text="${alertText}" style="height:inherit"></div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">       
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><span th:text="${#authentication.getPrincipal().getName()}"></span></span>
+                                <img class="img-profile rounded-circle"
+                                    th:src="@{/img/user/} + ${#authentication.getPrincipal().getImage()}">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" th:href="@{/user/profile}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Tài khoản
+                                </a>
+                                <a class="dropdown-item" th:href="@{/admin}" sec:authorize="hasAnyRole('ADMIN', 'MODERATOR')">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Quản lý
+                                </a>
+                                <form th:action="@{/logout}" method="POST">
+			                    	<button class="dropdown-item" type="submit" data-toggle="modal" data-target="#logoutModal">
+			                        	<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+			                            	Đăng xuất
+			                    	</button>
+	                    		</form>
+                            </div>
+                        </li>
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid" layout:fragment="content">
+                   
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+	</div>
+	
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+    <script th:src="@{/js/sb-admin-2.min.js}"></script>
+    <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+    <script th:src="@{/js/demo/datatables-demo.js}"></script>
+    <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+	    $(function () {
+			$("#AlertBox").removeClass("hide");
+			$("#AlertBox").delay(1500).slideUp(500);
+		});
+	 	const buttons = document.querySelectorAll('.deletebtn');
+	 	if (buttons) {
+	 		Array.from(buttons).forEach(function (item) {
+		 		item.addEventListener('click',function (event) {
+		 			if(confirm('Xác nhận xóa bản ghi này ?')){
+		 				id = this.dataset.id
+		 				deleteType = this.dataset.type
+		 				window.location.href = `/user/delete-${deleteType}/` + parseInt(id);
+		 			} else {
+		 				return;
+		 			}
+		 	    });
+		 	});
+	 	}
+	 	
+	 	const dayDataArr = document.querySelectorAll('.day-data-detail');
+	 	
+	 	function numberwithdots(num) {
+	 		if (Math.abs(num) >= 1000000000) {
+	 	        return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + ' G';
+	 	     }
+	 	     if (Math.abs(num) >= 1000000) {
+	 	        return (num / 1000000).toFixed(1).replace(/\.0$/, '') + ' M';
+	 	     }
+	 	     if (Math.abs(num) >= 1000) {
+	 	        return (num / 1000).toFixed(1).replace(/\.0$/, '') + ' K';
+	 	     }
+	 	     return num;
+	 	}
+	</script>
+	
+
+	<script th:inline="javascript">
+		Chart.defaults.global.datasets.bar.categoryPercentage = 0.6;
+		var ctx = document.getElementById("myAreaChart");
+		if (ctx) {
+			var chart = new Chart(ctx, {
+				   type: 'bar',
+				   data: {
+				      labels: [[${areaLabel}]],
+				      datasets: [{
+				         label: 'Chi tiêu',
+				         data: [[${dayExpense}]],
+				         backgroundColor: '#F43F5E'
+				      }, {
+				         label: 'Thu nhập',
+				         data: [[${dayIncome}]],
+				         backgroundColor: '#10B981'
+				      }]
+				   },
+				   options: {
+					   cutoutPercentage: 80,
+					   tooltips: {
+						   	backgroundColor: "rgb(255,255,255)",
+						    bodyFontColor: "#858796",
+						    titleMarginBottom: 10,
+						    titleFontColor: '#6e707e',
+						    titleFontSize: 14,
+						    borderColor: '#dddfeb',
+						    borderWidth: 1,
+						    xPadding: 15,
+						    yPadding: 15,
+						    displayColors: false,
+						    intersect: false,
+						    mode: 'index',
+						    caretPadding: 10,
+						},
+					    scales: {
+					      	xAxes: [{
+					        	stacked: true,
+					        	gridLines: {
+							          display: false,
+							          drawBorder: false
+							        },
+							    ticks: {
+							    	callback: function(value, index, values) {
+					                	return index % 2 === 0 ? value : '';
+					                }
+							    }
+					      	}],
+					      	yAxes: [{
+					        	ticks: {
+					          		beginAtZero: true,
+					                callback: function(value, index, values) {
+					                    return index % 2 === 0 ? (numberwithdots(value) + ' ₫') : '';
+					                }
+					        	},
+					        	gridLines: {
+							          color: "rgb(234, 236, 244)",
+							          zeroLineColor: "rgb(234, 236, 244)",
+							          drawBorder: false,
+							          borderDash: [2],
+							          zeroLineBorderDash: [2]
+							        }
+					      	}]
+					    },
+					    legend: {
+						      display: false
+						},
+						maintainAspectRatio: false,
+					    layout: {
+					      padding: {
+					        left: 10,
+					        right: 25,
+					        top: 25,
+					        bottom: 0
+					      }
+					    },
+					    tooltips: {
+						      backgroundColor: "rgb(255,255,255)",
+						      bodyFontColor: "#858796",
+						      titleMarginBottom: 10,
+						      titleFontColor: '#6e707e',
+						      titleFontSize: 14,
+						      borderColor: '#dddfeb',
+						      borderWidth: 1,
+						      xPadding: 15,
+						      yPadding: 15,
+						      displayColors: false,
+						      intersect: false,
+						      mode: 'index',
+						      caretPadding: 10,
+						      callbacks: {
+						        label: function(tooltipItem, chart) {
+						          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+						          return datasetLabel + ': ' + numberwithdots(tooltipItem.yLabel) + ' ₫';
+						        }
+						      }
+						    }
+					}
+				});
+		}
+		
+	</script>
+	<script th:inline="javascript">
+		var ctx = document.getElementById("myPieChart1");
+		if (ctx) {
+			var myPieChart = new Chart(ctx, {
+				  type: 'doughnut',
+				  data: {
+				    labels: [[${doughnutIncomeLabel}]],
+				    datasets: [{
+				      data: [[${doughnutIncomeData}]],
+				      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#EF4444', 
+				    	  '#F97316', '#F59E0B', '#EAB308', '#84CC16', '#10B981',
+				    	  '#14B8A6', '#EC4899', '#F43F5E', '#71717A'],
+				      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#DC2626', 
+				    	  '#EA580C', '#D97706', '#CA8A04', '#65A30D', '#059669',
+				    	  '#0D9488', '#DB2777', '#E11D48', '#52525B'],
+				      hoverBorderColor: "rgba(234, 236, 244, 1)",
+				    }],
+				  },
+				  options: {
+				    maintainAspectRatio: false,
+				    tooltips: {
+				      backgroundColor: "rgb(255,255,255)",
+				      bodyFontColor: "#858796",
+				      borderColor: '#dddfeb',
+				      borderWidth: 1,
+				      xPadding: 15,
+				      yPadding: 15,
+				      displayColors: false,
+				      caretPadding: 10,
+				    },
+				    legend: {
+				         position: 'right'
+				      },
+				    cutoutPercentage: 80,
+				    tooltips: {
+	                    callbacks: {
+	                        label: function (tooltipItem, data) {
+	                            var dataset = data.datasets[tooltipItem.datasetIndex];
+	                            var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+	                            var total = meta.total;
+	                            var currentValue = dataset.data[tooltipItem.index];
+	                            var percentage = parseFloat((currentValue / total * 100).toFixed(1));
+	                            return numberwithdots(currentValue) + ' ₫' + ' (' + percentage + '%)';
+	                        },
+	                        title: function (tooltipItem, data) {
+	                            return data.labels[tooltipItem[0].index];
+	                        }
+	                    }
+	                },
+	                plugins: {
+	                    datalabels: {
+	                        formatter: (value) => {
+	                            return value + '%';
+	                        }
+	                    }
+	                }
+				  },
+				});
+			}
+	</script>
+	<script th:inline="javascript">
+	var ctx = document.getElementById("myPieChart2");
+	if (ctx) {
+		var myPieChart = new Chart(ctx, {
+			  type: 'doughnut',
+			  data: {
+			    labels: [[${doughnutExpenseLabel}]],
+			    datasets: [{
+			      data: [[${doughnutExpenseData}]],
+			      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#EF4444', 
+			    	  '#F97316', '#F59E0B', '#EAB308', '#84CC16', '#10B981',
+			    	  '#14B8A6', '#EC4899', '#F43F5E', '#71717A'],
+			      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#DC2626', 
+			    	  '#EA580C', '#D97706', '#CA8A04', '#65A30D', '#059669',
+			    	  '#0D9488', '#DB2777', '#E11D48', '#52525B'],
+			      hoverBorderColor: "rgba(234, 236, 244, 1)",
+			    }],
+			  },
+			  options: {
+			    maintainAspectRatio: false,
+			    tooltips: {
+			      backgroundColor: "rgb(255,255,255)",
+			      bodyFontColor: "#858796",
+			      borderColor: '#dddfeb',
+			      borderWidth: 1,
+			      xPadding: 15,
+			      yPadding: 15,
+			      displayColors: false,
+			      caretPadding: 10,
+			    },
+			    legend: {
+			         position: 'right'
+			      },
+			    cutoutPercentage: 80,
+			    tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var dataset = data.datasets[tooltipItem.datasetIndex];
+                            var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+                            var total = meta.total;
+                            var currentValue = dataset.data[tooltipItem.index];
+                            var percentage = parseFloat((currentValue / total * 100).toFixed(1));
+                            return numberwithdots(currentValue) + ' ₫' + ' (' + percentage + '%)';
+                        },
+                        title: function (tooltipItem, data) {
+                            return data.labels[tooltipItem[0].index];
+                        }
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        formatter: (value) => {
+                            return value + '%';
+                        }
+                    }
+                }
+			  },
+			});
+		}
+	</script>
+
+	<script th:inline="javascript">
+		
+	</script>
+</body>
+</html>

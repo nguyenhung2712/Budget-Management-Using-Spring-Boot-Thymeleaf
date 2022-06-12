@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      	layout:decorate="~{layouts/admin}">   	
+<div layout:fragment="content">
+	<h1 class="h3 mb-2 text-gray-800">Cập nhật người dùng</h1>
+	<div class="card shadow mb-4">
+		<div class="card-body">
+			<form id="uploadFiles" th:action="@{/admin/save-user}" th:object="${user}" method="POST" enctype="multipart/form-data">
+		 		<input type="hidden" th:field="*{user_id}" />
+		 		<input type="hidden" th:name="img" th:id ="img" th:value="${user.image}"/>
+		 		
+		 		<label>Họ tên <sup>*</sup></label>
+		 		<input type="text" th:field = "*{name}" required
+		 		placeholder="Nhập họ tên người dùng" class="form-control mb-4 col-md-6 col-12">
+		 		
+		 		<label>Email <sup>*</sup></label>
+		 		<input type="text" th:field = "*{email}" required
+		 		placeholder="Nhập email người dùng" class="form-control mb-4 col-md-6 col-12">
+		 		
+		 		<label>Số điện thoại <sup>*</sup></label>
+		 		<input type="text" th:field = "*{phone}" required
+		 		placeholder="Nhập số điện thoại" class="form-control mb-4 col-md-6 col-12">
+		 		
+		 		<label for="image">Ảnh <sup>*</sup></label>
+		 		<input type="file" th:name="file" th:value = "*{image}" id="image"
+		 		class="form-control mb-4 col-md-6 col-12" >
+		 		
+		 		<label>Tên tài khoản <sup>*</sup></label>
+		 		<input type="text" th:field = "*{username}" required
+		 		placeholder="Nhập tên tài khoản" class="form-control mb-4 col-md-6 col-12">
+		 		
+		 		<label>Mật khẩu <sup>*</sup></label>
+		 		<input type="password" th:field = "*{password}" required value=""
+		 		placeholder="Nhập mật khẩu" class="form-control mb-4 col-md-6 col-12">
+		 		
+		 		<label>Roles</label>
+		 		<div class="mb-4 col-md-6 col-12">
+		 			<div class="custom-control custom-checkbox custom-control-inline"
+		 				th:each="role : ${rolesList}">
+		 				<input type="checkbox" name="roles" class="custom-control-input"
+				            th:value="${role.id}" th:id="${role.id}" th:field="*{roles}"
+				        />
+				        <label class="custom-control-label" th:for="${role.id}"
+				        	th:text="${#strings.substring(role.name, 5)}"></label>
+				    </div>
+		 		</div>
+		 		<button type="submit" class="btn btn-info">Cập nhật</button>
+		 	</form>
+   		</div>
+	</div>
+	<div class="form-action">
+		<a th:href="@{/admin/users}">Quay lại</a>
+	</div>
+</div>
+</html>

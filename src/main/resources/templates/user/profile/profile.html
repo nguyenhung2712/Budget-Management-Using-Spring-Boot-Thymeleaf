@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/user}">
+<div layout:fragment="content">
+	<div class="row justify-content-center">
+		<div class="col-md-8 col-12">
+			<div class="card shadow mb-4">
+				<div class="card-body">
+					<div class="row justify-content-center ">
+						<img th:src="@{/img/user/} + ${user.image}" 
+						style="" class="img-fluid img-thumbnail col-md-4 col-8">
+						<div class="d-flex col-md-7 col-12 px-5 justify-content-center flex-column mt-md-0 mt-5">
+							<h2 class="h2 user-select-none text-center">[[${user.name}]]</h2>
+							<ul class="list-group list-group-flush">
+		                        <li class="list-group-item user-select-none">
+		                        	<i class="fas fa-phone mr-4"></i>
+		                        	<span th:if="${user.phone == null}" th:inline="text">
+		                        		<i>Chưa nhập thông tin</i>
+		                        	</span>
+		                        	<span th:unless="${user.phone == null}" th:text="${user.phone}"></span>
+		                        </li>
+		                        <li class="list-group-item user-select-none">
+		                        	<i class="fas fa-envelope mr-4"></i>[[${user.email}]]
+		                        </li>
+		                        <li class="list-group-item user-select-none">
+		                        	<i class="fas fa-user mr-4"></i>[[${user.username}]]
+		                        </li>
+		                    </ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-around">
+		<a th:href="@{/user/update-profile}" class="btn btn-info btn-icon-split">
+            <span class="icon text-white-50">
+            	<i class="fas fa-info-circle"></i>
+            </span>
+        	<span class="text">Chỉnh sửa thông tin</span>
+        </a>
+        <a th:href="@{/user/update-account}" class="btn btn-warning btn-icon-split">
+            <span class="icon text-white-50">
+            	<i class="fas fa-exclamation-triangle"></i>
+            </span>
+        	<span class="text">Chỉnh sửa tài khoản</span>
+        </a>
+	</div>
+	<div class="form-action">
+		<a th:href="@{/user}">Quay lại</a>
+	</div>
+</div>
+
+</html>

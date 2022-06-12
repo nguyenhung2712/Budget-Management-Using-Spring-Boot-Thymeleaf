@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/user}">
+
+<div layout:fragment="content">
+	<div class="form-action h4">
+		<a href="#" onclick="javascript:window.history.back()">Quay lại</a>
+	</div>
+	<div class="d-flex justify-content-center mb-4">
+    	<h1 class="h3 mb-0 text-gray-800" th:if="${source != null}">Thống kê nguồn thu nhập từ <b>[[${source}]]</b> ([[${month + "/" + year}]])</h1>
+    	<h1 class="h3 mb-0 text-gray-800" th:if="${category != null}">Thống kê loại chi tiêu <b>[[${category}]]</b> ([[${month + "/" + year}]])</h1>
+    </div>
+	<div class="row justify-content-center" id="area-details">
+		<div class="col-md-8 col-12">
+        	<div class="card shadow mb-4">
+            	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                	<h6 class="m-0 font-weight-bold text-primary">Chi tiết</h6>
+            	</div>
+                <div class="card-body">
+                	<div class="chart-area" style="height: 278px;">
+                		<canvas id="myAreaChart"></canvas>	
+                	</div>
+                	<hr>
+	                <ul class="list-group list-group-flush pb-1 border-0" th:if="${dayExpense != null}">
+	                	<li class="list-group-item detail-select" th:each="data: ${areaExpensesList}">
+	                		<a th:href="@{/user/day-detail/{day}/{month}/{year}/{type}(day=${data.day}, month=${month}, year=${year}, type='expense')}" 
+	                		class="d-flex justify-content-between text-decoration-none day-data-detail" 
+	                			style="color: #858796;">
+	                			<div th:text="${data.date}"></div>
+		                		<div class="d-flex flex-column align-items-end">
+		    						<div th:inline="text" class="text-danger">
+		    							-[[${#numbers.formatDecimal(data.expense, 0, "POINT", 0, "POINT")}]] ₫
+		    						</div>
+		                		</div>
+	                		</a>
+	                	</li>
+	                </ul>
+	                <ul class="list-group list-group-flush pb-1 border-0" th:if="${dayIncome != null}">
+	                	<li class="list-group-item detail-select" th:each="data: ${areaIncomesList}">
+	                		<a th:href="@{/user/day-detail/{day}/{month}/{year}/{type}(day=${data.day}, month=${month}, year=${year}, type='income')}"
+	                		class="d-flex justify-content-between text-decoration-none day-data-detail" 
+	                			style="color: #858796;">
+	                			<div th:text="${data.date}"></div>
+		                		<div class="d-flex flex-column align-items-end">
+		    						<div th:inline="text" class="text-success">
+		    							+[[${#numbers.formatDecimal(data.income, 0, "POINT", 0, "POINT")}]] ₫
+		    						</div>
+		                		</div>
+	                		</a>
+	                	</li>
+	                </ul>
+                </div>
+        	</div>
+        </div>
+	</div>
+</div>
+
+</html>

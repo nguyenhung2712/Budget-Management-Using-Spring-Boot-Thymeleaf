@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/user}">
+
+<div layout:fragment="content">
+<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between">
+		<h1 class="h3 mb-2 text-gray-800" >Danh sách chi tiêu</h1>
+		<a th:href="@{/user/create-expense}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+			<i class="fa-solid fa-file-plus fa-sm text-white-50"></i> Thêm mục chi
+		</a>
+	</div>
+	<div class="card shadow mb-4">
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+		        	<thead>
+		            	<tr>
+		                	<th>Ngày chi</th>
+			     			<th>Số tiền</th>
+				     		<th>Mô tả</th>
+			     			<th>Loại chi</th>
+		     				<th>Tác vụ</th>
+		            	</tr>
+		            </thead>
+		            <tbody>
+		                <tr th:each="expense: ${expensesList}">
+						   	<td th:text="${expense.date}"></td>
+						    <td th:inline="text">[[${#numbers.formatDecimal(expense.amount, 0, 'COMMA', 0, 'POINT')}]] VND</td>
+						    <td th:text="${expense.description}"></td>
+						    <td th:text="${expense.category.name}"></td>
+				     		<td class="action-area">
+							    <a th:href="@{/user/update-expense/{expense_id}(expense_id=${expense.expense_id})}" 
+							    class="btn btn-primary"><i class="fas fa-fw fa-edit"></i></a>
+								<a class="btn btn-primary deletebtn" th:data-id="${expense.expense_id}" 
+								th:data-type="expense"><i class="fas fa-fw fa-trash"></i></a>
+							</td>
+						</tr>
+		            </tbody>
+				</table>
+	        </div>
+   		</div>
+	</div>
+</div>
+</html>

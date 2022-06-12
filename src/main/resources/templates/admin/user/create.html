@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      	layout:decorate="~{layouts/admin}">   	
+<div layout:fragment="content">
+	<h1 class="h3 mb-2 text-gray-800">Thêm người dùng</h1>
+	<div class="card shadow mb-4">
+		<div class="card-body">
+			<form id="uploadFiles" th:action="@{/admin/save-user}" th:object="${user}" method="POST" enctype="multipart/form-data">
+		 		
+		 		<label>Họ tên <sup>*</sup></label>
+		 		<input type="text" th:field = "*{name}" required
+		 		placeholder="Nhập họ tên người dùng" class="form-control col-md-6 col-12">
+		 		<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger font-italic d-block"></label>
+		 		<div class="mb-4"></div>
+		 		
+		 		<label>Email <sup>*</sup></label>
+		 		<input type="text" th:field = "*{email}" required
+		 		placeholder="Nhập email người dùng" class="form-control col-md-6 col-12">
+		 		<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger font-italic d-block"></label>
+		 		<div class="mb-4"></div>
+		 		
+		 		<label>Số điện thoại <sup>*</sup></label>
+		 		<input type="text" th:field = "*{phone}" required
+		 		placeholder="Nhập số điện thoại" class="form-control col-md-6 col-12">
+		 		<label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger font-italic d-block"></label>
+		 		<div class="mb-4"></div>
+		 		
+		 		<label for="image">Ảnh <sup>*</sup></label>
+		 		<input type="file" th:name="file" th:value = "*{image}" id="image"
+		 		class="form-control mb-4 col-md-6 col-12" >
+		 		
+		 		<label>Tên tài khoản <sup>*</sup></label>
+		 		<input type="text" th:field = "*{username}" required
+		 		placeholder="Nhập tên tài khoản" class="form-control col-md-6 col-12">
+		 		<label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger font-italic d-block"></label>
+		 		<div class="mb-4"></div>
+		 		
+		 		<label>Mật khẩu <sup>*</sup></label>
+		 		<input type="password" th:field = "*{password}" required value=""
+		 		placeholder="Nhập mật khẩu" class="form-control col-md-6 col-12">
+		 		<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger font-italic d-block"></label>
+		 		<div class="mb-4"></div>
+		 		
+		 		<label>Roles</label>
+		 		<div class="mb-4 col-6">
+		 			<div class="custom-control custom-checkbox custom-control-inline"
+		 				th:each="role : ${rolesList}">
+		 				<input type="checkbox" name="roles" class="custom-control-input"
+				            th:value="${role.id}" th:id="${role.id}" th:field="*{roles}"
+				        />
+				        <label class="custom-control-label" th:for="${role.id}"
+				        	th:text="${#strings.substring(role.name, 5)}"></label>
+				    </div>
+		 		</div>
+		 		<button type="submit" class="btn btn-info">Thêm mới</button>
+		 	</form>
+   		</div>
+	</div>
+	<div class="form-action">
+		<a th:href="@{/admin/users}">Quay lại</a>
+	</div>
+</div>
+</html>

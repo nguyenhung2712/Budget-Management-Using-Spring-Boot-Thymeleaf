@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      	layout:decorate="~{layouts/admin}">   	
+<div layout:fragment="content">
+	<h1 class="h3 mb-2 text-gray-800">Thêm mục chi tiêu</h1>
+	<div class="card shadow mb-4 col-md-6 col-12">
+		<div class="card-body">
+			<form th:action="@{/admin/save-expense}" th:object="${expense}" method="POST">
+		 		
+		 		<label>Ngày chi <sup>*</sup></label>
+		 		<input type="date" th:field = "*{date}" required
+		 		class="form-control col-12 mb-4">
+		 		
+		 		<label>Số tiền <sup>*</sup></label>
+		 		<input type="number" th:field = "*{amount}" required
+		 		placeholder="Nhập số tiền" class="form-control col-12 mb-4">
+		 		
+		 		<label>Mô tả</label>
+		 		<input type="text" th:field = "*{description}" required
+		 		placeholder="Nhập mô tả" class="form-control col-12 mb-4">
+		 		
+		 		<label>Loại chi <sup>*</sup></label>
+		 		<select th:field="*{category}" class="form-control mb-4 col-12">
+				    <option th:each="item: ${categoriesList}" th:value="${item.csid}" th:text="${item.name}"></option>
+				</select>
+		 		
+		 		<label>Người dùng <sup>*</sup></label>
+		 		<select th:field="*{user}" class="form-control mb-4 col-12">
+				    <option th:each="item: ${usersList}" th:value="${item.user_id}" th:text="${item.username}"></option>
+				</select>
+		 		<button type="submit" class="btn btn-info">Thêm mới</button>
+		 	</form>
+   		</div>
+	</div>
+	<div class="form-action">
+		<a th:href="@{/admin/expenses}">Quay lại</a>
+	</div>
+</div>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/user}">
+
+<div layout:fragment="content">
+<!-- Page Heading -->
+	<div class="d-sm-flex align-items-center justify-content-between">
+		<h1 class="h3 mb-2 text-gray-800" >Danh sách thu nhập</h1>
+		<a th:href="@{/user/create-income}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+			<i class="fa-solid fa-file-plus fa-sm text-white-50"></i> Thêm mục thu
+		</a>
+	</div>
+	<div class="card shadow mb-4">
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+		        	<thead>
+		            	<tr>
+		                	<th>Ngày thu</th>
+			     			<th>Số tiền</th>
+				     		<th>Mô tả</th>
+			     			<th>Nguồn thu</th>
+		     				<th>Tác vụ</th>
+		            	</tr>
+		            </thead>
+		            <tbody>
+		                <tr th:each="income: ${incomesList}">
+						   	<td th:text="${income.date}"></td>
+						    <td th:inline="text">[[${#numbers.formatDecimal(income.amount, 0, 'COMMA', 0, 'POINT')}]] VND</td>
+						    <td th:text="${income.description}"></td>
+						    <td th:text="${income.source.name}"></td>
+				     		<td class="action-area">
+							    <a th:href="@{/admin/update-income/{income_id}(income_id=${income.income_id})}" 
+							    class="btn btn-primary"><i class="fas fa-fw fa-edit"></i></a>
+								<a class="btn btn-primary deletebtn" th:data-id="${income.income_id}" 
+								th:data-type="income"><i class="fas fa-fw fa-trash"></i></a>
+							</td>
+						</tr>
+		            </tbody>
+				</table>
+	        </div>
+   		</div>
+	</div>
+</div>

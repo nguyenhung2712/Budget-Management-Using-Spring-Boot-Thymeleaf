@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/user}">
+
+<div layout:fragment="content">
+	<div class="form-action h4">
+		<a href="#" onclick="javascript:window.history.back()">Quay lại</a>
+	</div>
+	<div class="d-flex justify-content-center mb-4">
+    	<h1 class="h3 mb-0 text-gray-800" th:if="${dayExpense != null}">Chi tiết chi tiêu ([[${month + "/" + year}]])</h1>
+    	<h1 class="h3 mb-0 text-gray-800" th:if="${dayIncome != null}">Chi tiết thu nhập ([[${month + "/" + year}]])</h1>
+    </div>
+	<div class="row">
+		<div class="col-md-7 col-12">
+        	<div class="card shadow mb-4">
+            	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                	<h6 class="m-0 font-weight-bold text-primary">Thống kê theo tháng</h6>
+            	</div>
+                <div class="card-body">
+                	<div class="chart-area" th:if="${haveInfo==true}">
+                		<canvas id="myAreaChart"></canvas>	
+                	</div>
+                	<div class="chart-area d-flex justify-content-center align-items-center" th:if="${haveInfo==false}">
+                		<h3 class="h3 mb-0 text-gray-800">Không có thông tin</h3>
+                	</div>
+                	<hr>
+                	<ul class="list-group list-group-flush pb-1 border-0" th:if="${dayExpense != null}">
+	                	<li class="list-group-item detail-select" th:each="data: ${areaExpensesList}">
+	                		<a th:href="@{/user/day-detail/{day}/{month}/{year}/{type}(day=${data.day}, month=${month}, year=${year}, type='expense')}" 
+	                		class="d-flex justify-content-between text-decoration-none day-data-detail" 
+	                			style="color: #858796;">
+	                			<div th:text="${data.date}"></div>
+		                		<div class="d-flex flex-column align-items-end">
+		    						<div th:inline="text" class="text-danger">
+		    							-[[${#numbers.formatDecimal(data.expense, 0, "POINT", 0, "POINT")}]] ₫
+		    						</div>
+		                		</div>
+	                		</a>
+	                	</li>
+	                </ul>
+	                <ul class="list-group list-group-flush pb-1 border-0" th:if="${dayIncome != null}">
+	                	<li class="list-group-item detail-select" th:each="data: ${areaIncomesList}">
+	                		<a th:href="@{/user/day-detail/{day}/{month}/{year}/{type}(day=${data.day}, month=${month}, year=${year}, type='income')}"
+	                		class="d-flex justify-content-between text-decoration-none day-data-detail" 
+	                			style="color: #858796;">
+	                			<div th:text="${data.date}"></div>
+		                		<div class="d-flex flex-column align-items-end">
+		    						<div th:inline="text" class="text-success">
+		    							+[[${#numbers.formatDecimal(data.income, 0, "POINT", 0, "POINT")}]] ₫
+		    						</div>
+		                		</div>
+	                		</a>
+	                	</li>
+	                </ul>
+                </div>
+        	</div>
+        </div>
+        <div class="col-md-5 col-12">
+        	<div class="card shadow mb-4">
+            	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                	<h6 class="m-0 font-weight-bold text-primary">Thống kê theo loại</h6>
+            	</div>
+                <div class="card-body" th:if="${dayExpense != null}">
+                	<div class="chart-area" style="height: 278px;" th:if="${haveInfo}">
+                		<canvas id="myPieChart2"></canvas>	
+                	</div>
+                	<div class="chart-area d-flex justify-content-center align-items-center" th:unless="${haveInfo}">
+                		<h3 class="h3 mb-0 text-gray-800">Không có thông tin</h3>
+                	</div>
+                	<hr>
+                	<ul class="list-group list-group-flush pb-1 border-0">
+	                	<li class="list-group-item detail-select" th:each="data: ${expenseWithCategoryList}">
+	                		<a th:href="@{/user/doughnut-cs-detail/{month}/{year}/{id}/{type}(month=${month}, year=${year}, id=${data.category.csid},type='expense')}" class="d-flex justify-content-between text-decoration-none day-data-detail" 
+	                			style="color: #858796;">
+			                	<div class="d-flex align-items-center">
+			                		<div class="mr-3">
+										<img th:src="@{/img/cs_icon/} + ${data.category.icon}" height="40">
+									</div>
+									<div>[[${data.category.name}]]</div>
+		                		</div>
+		                		<div class="text-danger">-[[${#numbers.formatDecimal(data.expense, 0, 'POINT', 0, 'POINT')}]] ₫</div>
+	                		</a>
+	                	</li>
+	                </ul>
+                </div>
+                <div class="card-body" th:if="${dayIncome != null}">
+                	<div class="chart-area" style="height: 278px;" th:if="${haveInfo}">
+                		<canvas id="myPieChart1"></canvas>	
+                	</div>
+                	<div class="chart-area d-flex justify-content-center align-items-center" th:unless="${haveInfo}">
+                		<h3 class="h3 mb-0 text-gray-800">Không có thông tin</h3>
+                	</div>
+                	<hr>
+                	<ul class="list-group list-group-flush pb-1 border-0">
+	                	<li class="list-group-item detail-select" th:each="data: ${incomeWithSourceList}">
+	                		<a th:href="@{/user/doughnut-cs-detail/{month}/{year}/{id}/{type}(month=${month}, year=${year}, id=${data.source.csid},type='income')}" 
+	                		class="d-flex justify-content-between text-decoration-none day-data-detail" 
+	                			style="color: #858796;">
+			                	<div class="d-flex align-items-center">
+			                		<div class="mr-3">
+										<img th:src="@{/img/cs_icon/} + ${data.source.icon}" height="40">
+									</div>
+									<div>[[${data.source.name}]]</div>
+		                		</div>
+		                		<div class="text-success">-[[${#numbers.formatDecimal(data.income, 0, 'POINT', 0, 'POINT')}]] ₫</div>
+	                		</a>
+	                	</li>
+	                </ul>
+                </div>
+        	</div>
+        </div>
+	</div>
+</div>
+
+</html>

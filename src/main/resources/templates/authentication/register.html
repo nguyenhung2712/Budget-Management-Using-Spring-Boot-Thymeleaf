@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/authentication}">
+<div layout:fragment="content">
+	<div class="row justify-content-center" >
+		<div class="col-xl-7 col-lg-9 col-md-4">
+			<div class="card o-hidden border-0 shadow-lg my-5">
+				<div class="card-body p-0">
+					<div class="row">
+							<div class="col-12">
+								<div class="p-5">
+									<div class="text-center">
+	                                	<h1 class="h4 text-gray-900 mb-4">Tạo tài khoản</h1>
+	                                </div>
+	                            	<form th:action="@{/register}" method="POST" th:object="${userDTO}" class="user">
+	                            		<div class="form-group">
+		                                    <input type="text" class="form-control form-control-user" id="exampleInputName"
+		                                        placeholder="Nhập họ tên..." name="name" th:value="*{name}" th:errorClass="is-invalid">
+		                                    <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger font-italic d-block error-label"></label>
+		                                </div>
+		                                <div class="form-group">
+		                                    <input type="text" class="form-control form-control-user" id="exampleInputUsername"
+		                                        placeholder="Nhập tên tài khoản..." name="username" th:value="*{username}" th:errorClass="is-invalid">
+		                                    <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger font-italic d-block error-label"></label>
+		                                </div>
+		                                <div class="form-group">
+		                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+		                                        placeholder="Nhập địa chỉ email..." name="email" th:value="*{email}" th:errorClass="is-invalid">
+		                                    <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger font-italic d-block error-label"></label>
+		                                </div>
+		                                <div class="form-group row">
+		                                    <div class="col-sm-6 mb-3 mb-sm-0">
+		                                        <input type="password" class="form-control form-control-user"
+		                                            id="exampleInputPassword" placeholder="Nhập mật khẩu..." 
+		                                            name="password" th:value="*{password}" th:errorClass="is-invalid">
+		                                        <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger font-italic d-block error-label"></label>
+		                                    </div>
+		                                    <div class="col-sm-6">
+		                                        <input type="password" class="form-control form-control-user"
+		                                            id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu..." 
+		                                            name="confPassword" th:value="*{confPassword}" th:errorClass="is-invalid">
+		                                        <label th:if="${#fields.hasErrors('confPassword')}" th:errors="*{confPassword}" class="text-danger font-italic d-block error-label"></label>
+		                                    </div>
+		                                </div>
+	                                    <button type="submit" class="btn btn-primary btn-user btn-block">Đăng ký</button>
+	                                   
+	                                </form>
+	                                <hr>
+	                                <div class="text-center">
+		                                <a class="small" th:href="@{/login}">Đã có tài khoản? Đăng nhập!</a>
+		                            </div>
+	                        	</div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>
