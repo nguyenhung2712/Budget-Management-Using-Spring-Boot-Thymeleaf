@@ -27,7 +27,7 @@ public class ExpenseController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping(value = {"", "/expenses"})
+	@GetMapping(value = "/expenses")
 	public String expensesListPage(Model model) {
 		model.addAttribute("expensesList", this.expenseService.getAllExpenses());
 		return "admin/expense/expenses";

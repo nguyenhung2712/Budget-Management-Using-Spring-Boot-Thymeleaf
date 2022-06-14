@@ -25,7 +25,7 @@ public class IncomeController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/incomes")
+	@GetMapping(value = {"", "/incomes"})
 	public String incomesListPage(Model model) {
 		model.addAttribute("incomesList", this.incomeService.getAllIncomes());
 		return "admin/income/incomes";

@@ -31,7 +31,6 @@ td:nth-child(1) {
 }
 
 .form-action a {
-	display: block;
         color: #BE123C;
         margin-left: 22px;
     text-decoration: none;
