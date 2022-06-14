@@ -23,7 +23,7 @@ import com.nguyenhung.bta.service.UserService;
 public class UserIncomeController {
 	@Autowired
 	private IncomeService incomeService;
-	@Autowired
+	@Autowired	
 	private SourceService sourceService;
 	@Autowired
 	private UserService userService;
@@ -35,7 +35,7 @@ public class UserIncomeController {
 		model.addAttribute("incomesList", this.incomeService.getIncomesByUser(currentUser));
 		return "user/income/incomes";
 	}
-	
+		
 	@GetMapping("/create-income")
 	public String createIncomePage(Model model) {
 		model.addAttribute("income", new Income());

@@ -548,9 +548,5 @@ public class StatisticController {
 		return "user/statistic/doughnut_cs_details";
 	}
 	
-	@GetMapping("/statistic-list")
-	public String detailListPage(Model model) {
-		return "user/statistic/list";
-	}
 	
 }

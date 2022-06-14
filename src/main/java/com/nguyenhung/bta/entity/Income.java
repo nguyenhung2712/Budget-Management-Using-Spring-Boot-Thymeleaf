@@ -11,9 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,13 +26,10 @@ public class Income {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "income_id", nullable = false)
 	private Long income_id;
-	@NotEmpty(message = "Hãy chọn ngày thực hiện")
 	@Column(name = "date", nullable = false)
 	private Date date;
-	@NotBlank(message = "Hãy nhập mô tả chi tiết ")
 	@Column(name = "description", nullable = false)
 	private String description;
-	@NotNull(message = "Hãy nhập số tiền")
 	@Column(name = "amount", nullable = false)
 	private float amount;
 	@ManyToOne(cascade = {CascadeType.PERSIST})

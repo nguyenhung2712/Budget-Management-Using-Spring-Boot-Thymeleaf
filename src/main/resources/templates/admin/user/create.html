@@ -9,19 +9,19 @@
 			<form id="uploadFiles" th:action="@{/admin/save-user}" th:object="${user}" method="POST" enctype="multipart/form-data">
 		 		
 		 		<label>Họ tên <sup>*</sup></label>
-		 		<input type="text" th:field = "*{name}" required
+		 		<input type="text" th:field = "*{name}"
 		 		placeholder="Nhập họ tên người dùng" class="form-control col-md-6 col-12">
 		 		<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger font-italic d-block"></label>
 		 		<div class="mb-4"></div>
 		 		
 		 		<label>Email <sup>*</sup></label>
-		 		<input type="text" th:field = "*{email}" required
+		 		<input type="text" th:field = "*{email}"
 		 		placeholder="Nhập email người dùng" class="form-control col-md-6 col-12">
 		 		<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger font-italic d-block"></label>
 		 		<div class="mb-4"></div>
 		 		
 		 		<label>Số điện thoại <sup>*</sup></label>
-		 		<input type="text" th:field = "*{phone}" required
+		 		<input type="text" th:field = "*{phone}"
 		 		placeholder="Nhập số điện thoại" class="form-control col-md-6 col-12">
 		 		<label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger font-italic d-block"></label>
 		 		<div class="mb-4"></div>
@@ -31,13 +31,13 @@
 		 		class="form-control mb-4 col-md-6 col-12" >
 		 		
 		 		<label>Tên tài khoản <sup>*</sup></label>
-		 		<input type="text" th:field = "*{username}" required
+		 		<input type="text" th:field = "*{username}" 
 		 		placeholder="Nhập tên tài khoản" class="form-control col-md-6 col-12">
 		 		<label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger font-italic d-block"></label>
 		 		<div class="mb-4"></div>
 		 		
 		 		<label>Mật khẩu <sup>*</sup></label>
-		 		<input type="password" th:field = "*{password}" required value=""
+		 		<input type="password" th:field = "*{password}" value=""
 		 		placeholder="Nhập mật khẩu" class="form-control col-md-6 col-12">
 		 		<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger font-italic d-block"></label>
 		 		<div class="mb-4"></div>

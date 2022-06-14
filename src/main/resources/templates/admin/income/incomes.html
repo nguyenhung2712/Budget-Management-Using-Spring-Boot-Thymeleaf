@@ -28,7 +28,7 @@
 		            <tbody>
 		                <tr th:each="income: ${incomesList}">
 						   	<td th:text="${income.date}"></td>
-						    <td th:inline="text">[[${#numbers.formatDecimal(income.amount, 0, 'POINT', 0, 'POINT')}]] VND</td>
+						    <td th:inline="text">[[${#numbers.formatDecimal(income.amount, 0, 'POINT', 0, 'POINT')}]] ₫</td>
 						    <td th:text="${income.description}"></td>
 						    <td th:text="${income.source.name}"></td>
 						    <td th:text="${income.user.username}"></td>

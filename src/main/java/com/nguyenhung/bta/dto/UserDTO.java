@@ -17,6 +17,8 @@ public class UserDTO {
 	@NotBlank(message = "Hãy nhập mật khẩu")
 	private String password;
 	private String confPassword;
+	@Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" 
+        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message = "Hãy nhập đúng định dạng email")
 	@NotBlank(message = "Hãy nhập email")
 	private String email;
 	@Override

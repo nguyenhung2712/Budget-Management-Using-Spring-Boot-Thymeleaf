@@ -27,11 +27,11 @@
 		            <tbody>
 		                <tr th:each="income: ${incomesList}">
 						   	<td th:text="${income.date}"></td>
-						    <td th:inline="text">[[${#numbers.formatDecimal(income.amount, 0, 'COMMA', 0, 'POINT')}]] VND</td>
+						    <td th:inline="text">[[${#numbers.formatDecimal(income.amount, 0, 'COMMA', 0, 'POINT')}]] ₫</td>
 						    <td th:text="${income.description}"></td>
 						    <td th:text="${income.source.name}"></td>
 				     		<td class="action-area">
-							    <a th:href="@{/admin/update-income/{income_id}(income_id=${income.income_id})}" 
+							    <a th:href="@{/user/update-income/{income_id}(income_id=${income.income_id})}" 
 							    class="btn btn-primary"><i class="fas fa-fw fa-edit"></i></a>
 								<a class="btn btn-primary deletebtn" th:data-id="${income.income_id}" 
 								th:data-type="income"><i class="fas fa-fw fa-trash"></i></a>

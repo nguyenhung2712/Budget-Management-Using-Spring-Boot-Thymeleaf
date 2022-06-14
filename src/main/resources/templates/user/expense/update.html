@@ -11,21 +11,15 @@
  				
  				<label>Ngày chi <sup>*</sup></label>
 		 		<input type="date" th:field = "*{date}" required
-		 		class="form-control col-12">
-		 		<label th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="text-danger font-italic d-block"></label>
-		 		<div class="mb-4"></div>
+		 		class="form-control col-12 mb-4">
 		 		
 		 		<label>Số tiền <sup>*</sup></label>
 		 		<input type="number" th:field = "*{amount}" required
-		 		placeholder="Nhập số tiền" class="form-control col-12">
-		 		<label th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}" class="text-danger font-italic d-block"></label>
-		 		<div class="mb-4"></div>
+		 		placeholder="Nhập số tiền" class="form-control col-12 mb-4">
 		 		
 		 		<label>Mô tả</label>
 		 		<input type="text" th:field = "*{description}" required
-		 		placeholder="Nhập mô tả" class="form-control col-12">
-		 		<label th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger font-italic d-block"></label>
-		 		<div class="mb-4"></div>
+		 		placeholder="Nhập mô tả" class="form-control col-12 mb-4">
 		 		
 		 		<label>Loại chi <sup>*</sup></label>
 		 		<select th:field="*{category}" class="form-control mb-4 col-12">

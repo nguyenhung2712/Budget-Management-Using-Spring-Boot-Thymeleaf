@@ -14,7 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -30,24 +31,25 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", nullable = false)
 	private Long user_id;
+	@NotBlank(message = "Hãy nhập tên người dùng")
 	@Column(name = "name", nullable = false)
 	private String name;
-	
-	@Size(max = 50)
+	@NotBlank(message = "Hãy nhập email")
+	@Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" 
+	        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message = "Hãy nhập đúng định dạng email")
 	@Column(name = "email", nullable = false)
 	private String email;
-	@Size(max = 500)
 	@Column(name = "image")
 	private String image;
-	
-	@Size(max = 20)
+	@NotBlank(message = "Hãy nhập tên tài khoản")
 	@Column(name = "username", nullable = false)
 	private String username;
-	@Size(max = 15)
+	@NotBlank(message = "Hãy nhập số điện thoại")
+	@Pattern(regexp = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$", message = "Số điện thoại không hợp lệ")
 	@Column(name = "phone")
 	private String phone;
-	
-	@Size(max = 120)
+	@NotBlank(message = "Hãy nhập mật khẩu")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$", message = "Mật khẩu chứa ít nhất 1 ký tự hoa, thường và số")
 	@Column(name = "password", nullable = false)
 	private String password;
 	@OneToMany(mappedBy = "user")

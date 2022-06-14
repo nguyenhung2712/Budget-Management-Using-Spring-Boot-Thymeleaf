@@ -27,7 +27,7 @@
 		            <tbody>
 		                <tr th:each="expense: ${expensesList}">
 						   	<td th:text="${expense.date}"></td>
-						    <td th:inline="text">[[${#numbers.formatDecimal(expense.amount, 0, 'COMMA', 0, 'POINT')}]] VND</td>
+						    <td th:inline="text">[[${#numbers.formatDecimal(expense.amount, 0, 'COMMA', 0, 'POINT')}]] ₫</td>
 						    <td th:text="${expense.description}"></td>
 						    <td th:text="${expense.category.name}"></td>
 				     		<td class="action-area">

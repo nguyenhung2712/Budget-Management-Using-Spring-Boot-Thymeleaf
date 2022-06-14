@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,6 +65,24 @@ public class UserController {
 			@Param("img") String img,
 			RedirectAttributes redirectAttrs,
 			Model model) {
+		String username = user.getUsername();
+		String email = user.getEmail();
+		if (img == null) {
+			if (userService.existsByUsername(username)) {
+				result.addError(new FieldError("user", "username", "Tên tài khoản đã tồn tại"));
+			}
+			if (userService.existsByEmail(email)) {
+				result.addError(new FieldError("user", "email", "Email đã tồn tại"));
+			}
+		} else {
+			if (userService.existsByEmail(email) && (!email.equals(userService.getUserById(user.getUser_id()).getEmail()))) {
+				result.addError(new FieldError("user", "email", "Email đã tồn tại"));
+			}
+			if (userService.existsByUsername(username) && (!username.equals(userService.getUserById(user.getUser_id()).getUsername()))) {
+				result.addError(new FieldError("user", "username", "Tên tài khoản  đã tồn tại"));
+			}
+		}
+		
 		if (result.hasErrors()) {
 			model.addAttribute("rolesList", this.roleService.getAllRoles());
 			if (img == null) {
